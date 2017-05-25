@@ -1,5 +1,14 @@
-@()
+@(form: Form[TodoData])(implicit request: RequestHeader, messages: Messages)
 
-@main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
+@main("Todo App") {
+  <h1>Welcome to the Todo app</h1>
+    @request.flash.data.map{ case (name, value) =>
+        <div class="@name">@value</div>
+    }
+
+    @helper.form(action = routes.HomeController.add()) {
+        @helper.CSRF.formField
+        @helper.inputText(form("todo"))
+        <button type="submit">Add</button>
+    }
 }
