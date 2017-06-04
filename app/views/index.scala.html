@@ -1,4 +1,4 @@
-@(form: Form[TodoData])(implicit request: RequestHeader, messages: Messages)
+@(form: Form[TodoData], todoList: List[Option[String]])(implicit request: RequestHeader, messages: Messages)
 
 @main("Todo App") {
   <h1>Welcome to the Todo app</h1>
@@ -11,4 +11,11 @@
         @helper.inputText(form("todo"))
         <button type="submit">Add</button>
     }
+
+  <h2>My Todo List</h2>
+  <ul>
+      @todoList.map{todo =>
+        <li>@todo</li>
+      }
+  </ul>
 }
