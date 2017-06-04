@@ -15,7 +15,7 @@
   <h2>My Todo List</h2>
   <ul>
       @todoList.map{todo =>
-        <li>@todo</li>
+        <li>@todo <a href="@(routes.HomeController.remove())?todo=@todo">[x]</a></li>
       }
   </ul>
 }

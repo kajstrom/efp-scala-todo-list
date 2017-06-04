@@ -55,6 +55,14 @@ class HomeController @Inject()(val messagesApi: MessagesApi) extends Controller 
     val formValidationResult = todoForm.bindFromRequest
     formValidationResult.fold(errorFunction, successFunction)
   }
+
+  def remove = Action { implicit request =>
+    val r = new RedisClient("localhost", 6379)
+    r.lrem("todo", 1, request.getQueryString("todo").get)
+    r.disconnect
+
+    Redirect(routes.HomeController.index()).flashing("info" -> "Todo task removed!")
+  }
 }
 
 case class TodoData(todo: String)
